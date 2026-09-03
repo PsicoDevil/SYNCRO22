@@ -1,26 +1,194 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================
+   SYNCRO22 — Design Tokens
+   ============================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  /* Paleta base */
+  --color-black: #050505;
+  --color-ink: #0a0a0a;
+  --color-coal: #111111;
+  --color-ash: #1a1a1a;
+  --color-steel: #2a2a2a;
+  --color-smoke: #6b6b6b;
+  --color-fog: #9a9a9a;
+  --color-bone: #e8e8e8;
+  --color-white: #ffffff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Acento — rojo sangre industrial */
+  --color-blood: #d90429;
+  --color-blood-dark: #a3021f;
+  --color-blood-bright: #ff1e3c;
+
+  /* Tipografías */
+  --font-display: var(--font-display-family), "Arial Black", sans-serif;
+  --font-sans: var(--font-sans-family), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-mono-family), "Courier New", monospace;
+
+  /* Radios */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* Easings */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Animaciones */
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
+}
+
+/* ============================================
+   Base
+   ============================================ */
+
+:root {
+  --background: #050505;
+  --foreground: #e8e8e8;
+  --grain-opacity: 0.04;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-blood);
+  color: var(--color-white);
+}
+
+/* Scrollbar industrial */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-steel);
+  border: 2px solid var(--color-ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-blood);
+}
+
+/* ============================================
+   Textura de grano (noise)
+   ============================================ */
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ============================================
+   Utilidades de marca
+   ============================================ */
+
+/* Título display con tracking industrial */
+.display-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+/* Etiqueta técnica estilo industrial */
+.tech-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* Línea divisoria industrial */
+.industrial-line {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--color-blood) 0%,
+    var(--color-steel) 40%,
+    transparent 100%
+  );
+}
+
+/* Clip-path para ángulos cortados */
+.clip-corner {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+/* ============================================
+   Reveal on scroll
+   ============================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Focus visible accesible
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-blood);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   Reduced motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
