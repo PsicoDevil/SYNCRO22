@@ -95,7 +95,7 @@ export function ReleaseCountdown({ releaseDate }: ReleaseCountdownProps) {
       aria-atomic="true"
     >
       <div
-        className="flex items-start justify-center gap-4 sm:gap-6"
+        className="flex items-start justify-center gap-2.5 sm:gap-6"
         aria-label={
           time.isReleased
             ? "Disponible"
@@ -103,18 +103,18 @@ export function ReleaseCountdown({ releaseDate }: ReleaseCountdownProps) {
         }
       >
         {units.map((unit, index) => (
-          <div key={unit.label} className="flex items-start gap-4 sm:gap-6">
+          <div key={unit.label} className="flex items-start gap-2.5 sm:gap-6">
             {index > 0 ? (
               <span
                 className="mt-1 hidden h-10 w-px bg-steel sm:block"
                 aria-hidden="true"
               />
             ) : null}
-            <div className="flex flex-col items-center gap-1">
-              <span className="font-mono text-3xl font-bold tabular-nums text-bone sm:text-4xl lg:text-5xl">
+            <div className="flex flex-col items-center gap-0.5 sm:gap-1">
+              <span className="font-mono text-2xl font-bold tabular-nums text-bone sm:text-4xl lg:text-5xl">
                 {unit.value}
               </span>
-              <span className="tech-label text-[0.625rem] text-blood">
+              <span className="tech-label text-[0.5625rem] text-blood sm:text-[0.625rem]">
                 {unit.label}
               </span>
             </div>

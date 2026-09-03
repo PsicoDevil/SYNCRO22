@@ -17,8 +17,8 @@ export function Footer() {
 
   return (
     <footer className="border-t border-steel bg-ink">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+        <div className="flex flex-col gap-10 sm:gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex flex-col gap-6">
             <Logo size="sm" />
           </div>
@@ -53,7 +53,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-steel/60 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-steel/60 pt-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
           <p className="tech-label text-smoke">
             © {year} SYNCRO22. TODOS LOS DERECHOS RESERVADOS.
           </p>

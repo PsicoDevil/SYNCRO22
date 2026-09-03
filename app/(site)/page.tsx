@@ -18,22 +18,22 @@ export default function HomePage() {
           aria-hidden="true"
         />
 
-        <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-6 py-24 text-center lg:px-8">
-          <p className="tech-label mb-8 text-blood">SITIO OFICIAL</p>
+        <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
+          <p className="tech-label mb-4 text-blood sm:mb-8">SITIO OFICIAL</p>
           <Image
             src="/syncrologo-cropped.svg"
             alt="SYNCRO22"
             width={940}
             height={1672}
             priority
-            className="h-[clamp(10rem,28vh,20rem)] w-auto"
+            className="h-[clamp(7rem,22vh,12rem)] w-auto sm:h-[clamp(10rem,28vh,20rem)]"
           />
           {site.releaseDate ? (
-            <div className="mt-12">
+            <div className="mt-8 sm:mt-12">
               <ReleaseCountdown releaseDate={site.releaseDate} />
             </div>
           ) : null}
-          <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex w-full flex-col gap-3 sm:mt-12 sm:w-auto sm:flex-row sm:gap-4">
             <Button href="/musica" size="lg">
               ESCUCHAR
             </Button>

@@ -63,13 +63,13 @@ export function MobileMenu() {
         )}
         aria-hidden={!isOpen}
       >
-        <div className="flex h-20 items-center justify-between border-b border-steel px-6">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-steel px-4 sm:h-20 sm:px-6">
           <Image
             src="/syncrologo-cropped.svg"
             alt="SYNCRO22"
             width={940}
             height={1672}
-            className="h-10 w-auto"
+            className="h-8 w-auto sm:h-10"
           />
           <button
             type="button"
@@ -81,25 +81,28 @@ export function MobileMenu() {
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col justify-center gap-2 px-6" aria-label="Menú principal">
+        <nav
+          className="flex flex-1 flex-col justify-start gap-1 overflow-y-auto px-4 pt-4 sm:justify-center sm:gap-2 sm:px-6 sm:pt-0"
+          aria-label="Menú principal"
+        >
           {navItems.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "group flex items-baseline gap-4 py-3 transition-all duration-300",
+                "group flex items-baseline gap-4 py-2.5 transition-all duration-300 sm:py-3",
                 pathname === item.href ? "text-blood" : "text-bone hover:text-blood"
               )}
             >
               <span className="tech-label text-smoke">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <span className="display-title text-4xl uppercase">{item.label}</span>
+              <span className="display-title text-3xl uppercase sm:text-4xl">{item.label}</span>
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center justify-between border-t border-steel px-6 py-6">
+        <div className="flex shrink-0 items-center justify-between border-t border-steel px-4 py-4 sm:px-6 sm:py-6">
           <span className="tech-label text-smoke">SEGUINOS</span>
           {socialLinks.instagram ? (
             <a
