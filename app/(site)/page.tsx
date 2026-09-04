@@ -30,7 +30,7 @@ export default function HomePage() {
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
-            className="aspect-square h-[clamp(8.4rem,26.4vh,14.4rem)] w-auto max-w-full object-contain mix-blend-screen sm:h-[clamp(12rem,33.6vh,24rem)]"
+            className="aspect-square h-[clamp(8.4rem,26.4vh,14.4rem)] w-auto max-w-full object-contain mix-blend-screen sm:h-[clamp(12rem,33.6vh,24rem)] lg:h-[clamp(18rem,47vh,27rem)]"
           />
           {site.releaseDate ? (
             <div className="mt-8 sm:mt-12">
