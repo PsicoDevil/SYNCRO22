@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/ui/Marquee";
 import { ReleaseCountdown } from "@/components/home/ReleaseCountdown";
@@ -9,7 +8,7 @@ export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-black">
+      <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden bg-black">
         <div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(217,4,41,0.12),transparent_60%)]"
           aria-hidden="true"
@@ -21,13 +20,17 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
           <p className="tech-label mb-4 text-blood sm:mb-8">SITIO OFICIAL</p>
-          <Image
-            src="/syncrologo-cropped.svg"
-            alt="SYNCRO22"
-            width={940}
-            height={1672}
-            priority
-            className="h-[clamp(7rem,22vh,12rem)] w-auto sm:h-[clamp(10rem,28vh,20rem)]"
+          <video
+            src="/syncro22_smoke_embers_1080.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            disableRemotePlayback
+            aria-hidden="true"
+            className="aspect-square h-[clamp(7rem,22vh,12rem)] w-auto max-w-full object-contain mix-blend-screen sm:h-[clamp(10rem,28vh,20rem)]"
           />
           {site.releaseDate ? (
             <div className="mt-8 sm:mt-12">
