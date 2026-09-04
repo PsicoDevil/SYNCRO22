@@ -41,11 +41,26 @@ export interface Release {
 
 export interface Show {
   id: string;
-  date: string;
+  /**
+   * Fecha completa en ISO (YYYY-MM-DD) SOLO cuando el año figura claramente
+   * en el flyer. null = año pendiente de confirmación (no se infiere).
+   */
+  date: string | null;
+  /** Fecha visible tal como figura en el flyer (ej. "Sábado 21/02/26"). */
+  dateLabel: string;
+  /** Hora del show tal como figura en el flyer. */
   time?: string;
+  /** Nombre del evento / festival. */
+  title: string;
   venue?: string;
+  /** Dirección textual tal como figura en el flyer. */
+  address?: string;
   city?: string;
   country?: string;
+  /** Flyer oficial (ruta dentro de /public). */
+  flyer?: string;
+  /** Dato adicional claramente visible en el flyer (ej. "Entrada libre"). */
+  notes?: string;
   ticketsUrl?: string;
   status: "upcoming" | "past";
 }

@@ -14,7 +14,7 @@ export const site: Site = {
    * Email receptor del formulario de contacto.
    * TEMPORAL: reemplazar por el email oficial de SYNCRO22 cuando exista.
    */
-  contactEmail: "chelolmesec@gmail.com",
+  contactEmail: "syncrooo22@gmail.com",
   /** Lanzamiento del disco — 31 de octubre de 2026, zona horaria de Argentina. */
   releaseDate: "2026-10-31T00:00:00-03:00",
   /**
