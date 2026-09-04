@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/layout/Logo";
-import { InstagramIcon } from "@/components/ui/icons";
+import { FacebookIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
 import { socialLinks } from "@/lib/site";
 
 const navItems = [
@@ -38,6 +38,28 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <span className="tech-label text-smoke">SEGUINOS</span>
             <div className="flex items-center gap-3">
+              {socialLinks.facebook ? (
+                <a
+                  href={socialLinks.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-steel text-fog transition-all duration-300 hover:border-blood hover:text-blood"
+                  aria-label="Facebook de SYNCRO22"
+                >
+                  <FacebookIcon className="h-5 w-5" />
+                </a>
+              ) : null}
+              {socialLinks.youtube ? (
+                <a
+                  href={socialLinks.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-steel text-fog transition-all duration-300 hover:border-blood hover:text-blood"
+                  aria-label="YouTube de SYNCRO22"
+                >
+                  <YouTubeIcon className="h-5 w-5" />
+                </a>
+              ) : null}
               {socialLinks.instagram ? (
                 <a
                   href={socialLinks.instagram}

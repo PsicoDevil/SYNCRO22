@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/layout/Logo";
 import { MobileMenu } from "@/components/layout/MobileMenu";
-import { InstagramIcon } from "@/components/ui/icons";
+import { FacebookIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import { socialLinks } from "@/lib/site";
 
@@ -57,6 +57,28 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
+          {socialLinks.facebook ? (
+            <a
+              href={socialLinks.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-11 w-11 items-center justify-center text-fog transition-colors duration-300 hover:text-blood lg:inline-flex"
+              aria-label="Facebook de SYNCRO22"
+            >
+              <FacebookIcon className="h-5 w-5" />
+            </a>
+          ) : null}
+          {socialLinks.youtube ? (
+            <a
+              href={socialLinks.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-11 w-11 items-center justify-center text-fog transition-colors duration-300 hover:text-blood lg:inline-flex"
+              aria-label="YouTube de SYNCRO22"
+            >
+              <YouTubeIcon className="h-5 w-5" />
+            </a>
+          ) : null}
           {socialLinks.instagram ? (
             <a
               href={socialLinks.instagram}

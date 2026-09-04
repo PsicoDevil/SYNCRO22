@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/ui/Marquee";
 import { ReleaseCountdown } from "@/components/home/ReleaseCountdown";
+import { Biography } from "@/components/home/Biography";
 import { site } from "@/content/site";
 
 export default function HomePage() {
@@ -49,6 +50,9 @@ export default function HomePage() {
           "DE MÍ NUNCA VAS A ESCAPAR, ME ALIMENTO DE SANGRE Y OSCURIDAD...",
         ]}
       />
+
+      {/* BIOGRAFÍA */}
+      <Biography paragraphs={site.biography ?? []} />
     </>
   );
 }

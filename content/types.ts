@@ -104,4 +104,6 @@ export interface Site {
   bookingEmail?: string;
   /** Fecha de lanzamiento del disco (ISO 8601 con zona horaria). */
   releaseDate?: string;
+  /** Biografía oficial de la banda, dividida en párrafos. */
+  biography?: string[];
 }

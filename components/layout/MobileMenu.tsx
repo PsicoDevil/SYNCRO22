@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { CloseIcon, InstagramIcon, MenuIcon } from "@/components/ui/icons";
+import { CloseIcon, FacebookIcon, InstagramIcon, MenuIcon, YouTubeIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import { socialLinks } from "@/lib/site";
 
@@ -104,17 +104,41 @@ export function MobileMenu() {
 
         <div className="flex shrink-0 items-center justify-between border-t border-steel px-4 py-4 sm:px-6 sm:py-6">
           <span className="tech-label text-smoke">SEGUINOS</span>
-          {socialLinks.instagram ? (
-            <a
-              href={socialLinks.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood"
-              aria-label="Instagram de SYNCRO22"
-            >
-              <InstagramIcon className="h-5 w-5" />
-            </a>
-          ) : null}
+          <div className="flex items-center gap-2">
+            {socialLinks.facebook ? (
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood"
+                aria-label="Facebook de SYNCRO22"
+              >
+                <FacebookIcon className="h-5 w-5" />
+              </a>
+            ) : null}
+            {socialLinks.youtube ? (
+              <a
+                href={socialLinks.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood"
+                aria-label="YouTube de SYNCRO22"
+              >
+                <YouTubeIcon className="h-5 w-5" />
+              </a>
+            ) : null}
+            {socialLinks.instagram ? (
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood"
+                aria-label="Instagram de SYNCRO22"
+              >
+                <InstagramIcon className="h-5 w-5" />
+              </a>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

@@ -14,3 +14,6 @@ export const siteDescription = site.description;
 
 /** Redes sociales de la banda. */
 export const socialLinks = site.social;
+
+/** Email receptor de contacto. */
+export const siteContactEmail = site.contactEmail;
