@@ -6,11 +6,12 @@ import { VideoPressCard } from "@/components/videos/VideoPressCard";
 import { news } from "@/content/news";
 
 // Prensa audiovisual — entrevista (recurso existente). El archivo original
-// "Entrevista - ESQUIÚ ROCK.mkv" vive en /public/news (sin mover ni renombrar);
-// se sirve desde la copia remuxada (h264/AAC) compatible con <video>.
+// "Entrevista - ESQUIÚ ROCK.mkv" vive en /public/news (sin mover ni renombrar
+// ni servir desde el repositorio); la reproducción se realiza vía embed de
+// YouTube con el poster real del video.
 const PRESS_INTERVIEW = {
   title: "Entrevista - ESQUIÚ ROCK",
-  src: "/video/entrevista-esquiu-rock.mp4",
+  youtubeId: "SQOD2g6wc-0",
   poster: "/video/posters/entrevista-esquiu-rock.jpg",
 };
 
@@ -101,7 +102,7 @@ export default function NoticiasPage() {
               <div className="lg:col-span-3">
                 <VideoPressCard
                   title={PRESS_INTERVIEW.title}
-                  src={PRESS_INTERVIEW.src}
+                  youtubeId={PRESS_INTERVIEW.youtubeId}
                   poster={PRESS_INTERVIEW.poster}
                 />
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 function PlayIcon({ className }: { className?: string }) {
   return (
@@ -19,35 +19,33 @@ function PlayIcon({ className }: { className?: string }) {
 
 interface VideoPressCardProps {
   title: string;
-  src: string;
+  /** ID de YouTube — reproducción vía embed (sin archivos locales). */
+  youtubeId: string;
   poster?: string;
 }
 
 /**
  * Pieza audiovisual de prensa (Noticias).
- * Reproduce únicamente por interacción del usuario — sin autoplay —
- * con controles nativos una vez iniciada la reproducción.
+ * Patrón fachada: se muestra el poster con botón Play; el embed de YouTube
+ * se monta únicamente al hacer click — la reproducción siempre la inicia el
+ * usuario, nada se reproduce automáticamente al cargar la página. Controles
+ * nativos de YouTube.
  */
-export function VideoPressCard({ title, src, poster }: VideoPressCardProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+export function VideoPressCard({ title, youtubeId, poster }: VideoPressCardProps) {
   const [isActive, setIsActive] = useState(false);
 
   return (
     <div className="group relative overflow-hidden border border-steel/70 bg-black/55 shadow-[0_24px_48px_-16px_rgba(0,0,0,0.75)] backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blood/60 hover:shadow-[0_30px_60px_-18px_rgba(0,0,0,0.85)]">
       <div className="relative aspect-video w-full overflow-hidden bg-black">
-        <video
-          ref={videoRef}
-          src={src}
-          poster={poster}
-          preload="metadata"
-          playsInline
-          controls={isActive}
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-label={`${title} — video`}
-          onPlay={() => setIsActive(true)}
-          className="h-full w-full object-contain"
-        />
+        {isActive ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&enablejsapi=1&playsinline=1&rel=0`}
+            title={`${title} — video`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : null}
         {!isActive && poster ? (
           <Image
             src={poster}
@@ -60,10 +58,7 @@ export function VideoPressCard({ title, src, poster }: VideoPressCardProps) {
         {!isActive ? (
           <button
             type="button"
-            onClick={() => {
-              // Reproducción iniciada por el usuario (sin autoplay, con sonido).
-              videoRef.current?.play();
-            }}
+            onClick={() => setIsActive(true)}
             aria-label={`Reproducir ${title}`}
             className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center bg-black/30 transition-colors duration-300 hover:bg-black/15"
           >

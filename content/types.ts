@@ -69,12 +69,11 @@ export interface Video {
   id: string;
   title: string;
   /**
-   * ID de YouTube cuando el video está alojado allí.
-   * Para archivos locales usar `src`.
+   * ID de YouTube del video — la reproducción se realiza vía embed
+   * (https://www.youtube.com/embed/{youtubeId}). Los archivos de video
+   * pesados no se sirven desde el repositorio.
    */
-  youtubeId?: string;
-  /** Archivo de video local dentro de /public (reproducción nativa <video>). */
-  src?: string;
+  youtubeId: string;
   /** Poster generado a partir de un fotograma del propio video. */
   poster?: string;
   /** Categoría visible (ej. LIVE, COVER, VIDEO DE ESTUDIO). */

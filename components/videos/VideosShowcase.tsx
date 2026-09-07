@@ -23,18 +23,11 @@ interface VideoSlotProps {
   video: Video;
   variant: "featured" | "compact";
   isActive: boolean;
-  onPlay: (video: Video) => void;
-  register: (id: string, element: HTMLVideoElement | null) => void;
+  onActivate: (video: Video) => void;
+  register: (id: string, element: HTMLIFrameElement | null) => void;
 }
 
-function VideoSlot({ video, variant, isActive, onPlay, register }: VideoSlotProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const handlePlayClick = () => {
-    // Reproducción iniciada por el usuario (sin autoplay, con sonido).
-    videoRef.current?.play();
-  };
-
+function VideoSlot({ video, variant, isActive, onActivate, register }: VideoSlotProps) {
   const isFeatured = variant === "featured";
 
   return (
@@ -45,22 +38,24 @@ function VideoSlot({ video, variant, isActive, onPlay, register }: VideoSlotProp
       )}
     >
       <div className="relative aspect-video w-full overflow-hidden bg-black">
-        <video
-          ref={(element) => {
-            videoRef.current = element;
-            register(video.id, element);
-          }}
-          src={video.src}
-          poster={video.poster}
-          preload="metadata"
-          playsInline
-          controls={isActive}
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-label={`${video.title} — ${video.category ?? "video"}`}
-          onPlay={() => onPlay(video)}
-          className="h-full w-full object-contain"
-        />
+        {/*
+          Embed de YouTube: se monta ÚNICAMENTE al hacer click en el botón Play
+          (patrón fachada) — nada se carga ni reproduce al cargar la página.
+          El parámetro autoplay entra en acción recién entonces: la reproducción
+          siempre la inicia el usuario. Sin archivos de video locales.
+        */}
+        {isActive ? (
+          <iframe
+            ref={(element) => {
+              register(video.id, element);
+            }}
+            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&enablejsapi=1&playsinline=1&rel=0`}
+            title={`${video.title} — ${video.category ?? "video"}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : null}
         {!isActive && video.poster ? (
           <Image
             src={video.poster}
@@ -77,7 +72,7 @@ function VideoSlot({ video, variant, isActive, onPlay, register }: VideoSlotProp
         {!isActive ? (
           <button
             type="button"
-            onClick={handlePlayClick}
+            onClick={() => onActivate(video)}
             aria-label={`Reproducir ${video.title}`}
             className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center bg-black/30 transition-colors duration-300 hover:bg-black/15"
           >
@@ -121,9 +116,9 @@ export function VideosShowcase({ videos }: VideosShowcaseProps) {
   const secondary = videos.filter((video) => video.id !== featured.id);
 
   const [activeId, setActiveId] = useState<string | null>(null);
-  const registry = useRef(new Map<string, HTMLVideoElement>());
+  const registry = useRef(new Map<string, HTMLIFrameElement>());
 
-  const register = (id: string, element: HTMLVideoElement | null) => {
+  const register = (id: string, element: HTMLIFrameElement | null) => {
     if (element) {
       registry.current.set(id, element);
     } else {
@@ -131,10 +126,16 @@ export function VideosShowcase({ videos }: VideosShowcaseProps) {
     }
   };
 
-  // Solo un video en reproducción a la vez.
-  const handlePlay = (video: Video) => {
-    registry.current.forEach((element, id) => {
-      if (id !== video.id) element.pause();
+  // Solo un video en reproducción a la vez: al activar uno se pausan los
+  // demás embeds (YouTube IFrame API vía postMessage).
+  const handleActivate = (video: Video) => {
+    registry.current.forEach((iframe, id) => {
+      if (id !== video.id) {
+        iframe.contentWindow?.postMessage(
+          JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+          "*",
+        );
+      }
     });
     setActiveId(video.id);
   };
@@ -147,7 +148,7 @@ export function VideosShowcase({ videos }: VideosShowcaseProps) {
           video={featured}
           variant="featured"
           isActive={activeId === featured.id}
-          onPlay={handlePlay}
+          onActivate={handleActivate}
           register={register}
         />
       </div>
@@ -159,7 +160,7 @@ export function VideosShowcase({ videos }: VideosShowcaseProps) {
             video={video}
             variant="compact"
             isActive={activeId === video.id}
-            onPlay={handlePlay}
+            onActivate={handleActivate}
             register={register}
           />
         ))}
