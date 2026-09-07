@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
-import { FacebookIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  SpotifyIcon,
+  YouTubeIcon,
+} from "@/components/ui/icons";
 import { siteContactEmail, socialLinks } from "@/lib/site";
+
+// Perfil oficial de artista en Spotify. Se abre en pestaña nueva.
+const SPOTIFY_ARTIST_URL =
+  "https://open.spotify.com/intl-es/artist/6MGPFHFIpWpozKaYWyl9Rm?si=TrjY0eUbTCG-RnooJKmsSQ";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -23,6 +33,26 @@ export default function ContactoPage() {
         className="relative overflow-hidden bg-black py-16 sm:py-24"
         aria-label="Formulario de contacto de SYNCRO22"
       >
+        {/* Foto ambiental — maxicontacto: baterista y kit a la izquierda, doble fantasma a la derecha */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <Image
+            src="/contact/maxicontacto.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-[30%_20%] saturate-55 contrast-110 opacity-70 lg:object-[20%_center] lg:opacity-75"
+          />
+        </div>
+        {/* Velados cinematográficos para que el texto y el formulario sigan legibles */}
+        <div
+          className="absolute inset-0 bg-[linear-gradient(to_right,#050505_0%,rgba(5,5,5,0.45)_30%,rgba(5,5,5,0.1)_62%,rgba(5,5,5,0.3)_100%)]"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 bg-[linear-gradient(to_bottom,#050505_0%,transparent_28%,transparent_72%,#050505_100%)]"
+          aria-hidden="true"
+        />
+
         {/* Luz ambiental — misma gramática visual que el resto del sitio */}
         <div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(217,4,41,0.10),transparent_55%)]"
@@ -107,6 +137,15 @@ export default function ContactoPage() {
                         <YouTubeIcon className="h-5 w-5" />
                       </a>
                     ) : null}
+                    <a
+                      href={SPOTIFY_ARTIST_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-11 w-11 items-center justify-center border border-steel text-fog transition-all duration-300 hover:border-blood hover:text-blood"
+                      aria-label="Spotify"
+                    >
+                      <SpotifyIcon className="h-5 w-5" />
+                    </a>
                   </div>
                 </div>
               </Reveal>

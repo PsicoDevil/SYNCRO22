@@ -68,7 +68,17 @@ export interface Show {
 export interface Video {
   id: string;
   title: string;
-  youtubeId: string;
+  /**
+   * ID de YouTube cuando el video está alojado allí.
+   * Para archivos locales usar `src`.
+   */
+  youtubeId?: string;
+  /** Archivo de video local dentro de /public (reproducción nativa <video>). */
+  src?: string;
+  /** Poster generado a partir de un fotograma del propio video. */
+  poster?: string;
+  /** Categoría visible (ej. LIVE, COVER, VIDEO DE ESTUDIO). */
+  category?: string;
   description?: string;
   publishedAt?: string;
   featured?: boolean;
@@ -86,7 +96,8 @@ export interface GalleryImage {
 export interface NewsItem {
   id: string;
   title: string;
-  date: string;
+  /** Fecha ISO (YYYY-MM-DD). Opcional: se omite cuando no es visible/confirmada. */
+  date?: string;
   excerpt?: string;
   body?: string;
   image?: string;

@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local video files
+/public/video/*.mp4
+/public/video/*.mkv
+/public/news/*.mkv

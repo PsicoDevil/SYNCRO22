@@ -9,6 +9,8 @@ export const site: Site = {
     instagram: "https://www.instagram.com/syncro22_band/",
     facebook: "https://www.facebook.com/share/1MZ55NSR3y/",
     youtube: "https://www.youtube.com/@Syncro22",
+    spotify:
+      "https://open.spotify.com/intl-es/artist/6MGPFHFIpWpozKaYWyl9Rm?si=TrjY0eUbTCG-RnooJKmsSQ",
   },
   /**
    * Email receptor del formulario de contacto.

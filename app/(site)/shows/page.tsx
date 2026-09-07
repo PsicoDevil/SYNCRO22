@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -46,6 +47,21 @@ export default function ShowsPage() {
         className="relative overflow-hidden border-b border-steel/60"
         aria-label="Próximas fechas"
       >
+        {/* Foto ambiental — chelo22: directos de la banda, velados tras el listado */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <Image
+            src="/show/chelo22.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-[50%_30%] opacity-60 saturate-55 brightness-95"
+          />
+        </div>
+        {/* Velo para mantener el listado y los flyers legibles */}
+        <div
+          className="absolute inset-0 bg-[linear-gradient(to_bottom,#050505_0%,rgba(5,5,5,0.5)_50%,#050505_100%)]"
+          aria-hidden="true"
+        />
         <div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,4,41,0.07),transparent_55%)]"
           aria-hidden="true"

@@ -5,7 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/layout/Logo";
 import { MobileMenu } from "@/components/layout/MobileMenu";
-import { FacebookIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  SpotifyIcon,
+  YouTubeIcon,
+} from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import { socialLinks } from "@/lib/site";
 
@@ -88,6 +93,17 @@ export function Header() {
               aria-label="Instagram de SYNCRO22"
             >
               <InstagramIcon className="h-5 w-5" />
+            </a>
+          ) : null}
+          {socialLinks.spotify ? (
+            <a
+              href={socialLinks.spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-11 w-11 items-center justify-center text-fog transition-colors duration-300 hover:text-blood lg:inline-flex"
+              aria-label="Spotify"
+            >
+              <SpotifyIcon className="h-5 w-5" />
             </a>
           ) : null}
           <MobileMenu />

@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { Logo } from "@/components/layout/Logo";
-import { FacebookIcon, InstagramIcon, YouTubeIcon } from "@/components/ui/icons";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  SpotifyIcon,
+  YouTubeIcon,
+} from "@/components/ui/icons";
 import { socialLinks } from "@/lib/site";
 
 const navItems = [
@@ -69,6 +74,17 @@ export function Footer() {
                   aria-label="Instagram de SYNCRO22"
                 >
                   <InstagramIcon className="h-5 w-5" />
+                </a>
+              ) : null}
+              {socialLinks.spotify ? (
+                <a
+                  href={socialLinks.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-steel text-fog transition-all duration-300 hover:border-blood hover:text-blood"
+                  aria-label="Spotify de SYNCRO22"
+                >
+                  <SpotifyIcon className="h-5 w-5" />
                 </a>
               ) : null}
             </div>
