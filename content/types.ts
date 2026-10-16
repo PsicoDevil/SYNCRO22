@@ -112,12 +112,29 @@ export interface SocialLinks {
   tiktok?: string;
 }
 
+/**
+ * Información biográfica de un integrante.
+ *
+ * Todos los campos son opcionales porque no necesariamente
+ * todos los integrantes tienen su ficha completa todavía.
+ */
+export interface MemberBio {
+  shortBio?: string;
+  trajectory?: string;
+  howJoined?: string;
+  influences?: string;
+  personalNote?: string;
+}
+
+/**
+ * Integrante de SYNCRO22.
+ */
 export interface Member {
   id: string;
   name: string;
   role?: string;
   photo?: string;
-  bio?: string;
+  bio?: MemberBio;
 }
 
 export interface Site {
