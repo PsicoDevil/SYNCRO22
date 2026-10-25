@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { siteDescription, siteName, siteUrl } from "@/lib/site";
 
@@ -69,6 +70,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-black text-bone">
         {children}
+        <Analytics />
       </body>
     </html>
   );
