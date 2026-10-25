@@ -44,3 +44,5 @@ next-env.d.ts
 /public/video/*.mp4
 /public/video/*.mkv
 /public/news/*.mkv
+# Private album assets
+/private/

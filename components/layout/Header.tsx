@@ -12,17 +12,7 @@ import {
   YouTubeIcon,
 } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
-import { socialLinks } from "@/lib/site";
-
-const navItems = [
-  { href: "/musica", label: "Música" },
-  { href: "/videos", label: "Videos" },
-  { href: "/shows", label: "Shows" },
-  { href: "/galeria", label: "Galería" },
-  { href: "/integrantes", label: "Integrantes" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/contacto", label: "Contacto" },
-];
+import { internalNavigationItems as navItems, socialLinks } from "@/lib/site";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

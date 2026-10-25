@@ -6,6 +6,7 @@ export const members: Member[] = [
     name: "Maxi Vega",
     role: "Batería / Productor musical",
     photo: "/integrantes/MaxBata.png",
+    youtubeUrl: "https://www.youtube.com/@DJNGGAX/videos",
     bio: {
       shortBio:
         "Maximiliano Daniel Vega es músico, baterista y productor musical de San Fernando del Valle de Catamarca, Argentina.",
@@ -34,7 +35,7 @@ export const members: Member[] = [
       influences:
         "System of a Down, Trivium, Fit for an Autopsy, Slipknot, Mudvayne, Pantera, Rammstein y Lamb of God, entre otras.",
       personalNote:
-        "Para Chelo, la música forma parte de una búsqueda que nunca se queda quieta: explorar sonidos, descubrir mundos y encontrar nuevas formas de expresarse. Un recorrido que empezó con una guitarra guardada durante años y que hoy continúa haciendo ruido junto a SYNCRO22.",
+        "Para Chelo, la música es una forma de explorar sonidos, descubrir mundos y encontrar nuevas maneras de expresarse.\n\nFuera de la música, también encuentra su lugar entre el código y la creatividad como Full Stack Developer. Le apasiona el cine, especialmente el terror y los thrillers psicológicos, y disfruta de los videojuegos, desde las aventuras de The Witcher hasta la tensión de Dead by Daylight y la intensidad de Mortal Kombat.\n\nEntre guitarras, código, películas y videojuegos, siempre hay algo nuevo por descubrir.",
     },
   },
   {

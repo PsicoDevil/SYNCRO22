@@ -1,5 +1,6 @@
 import type { Member } from "@/content/types";
 import { cn } from "@/lib/utils";
+import { YouTubeIcon } from "@/components/ui/icons";
 
 interface MemberBioProps {
   member: Member;
@@ -62,17 +63,30 @@ export function MemberBio({ member, className }: MemberBioProps) {
         {member.name}
       </h2>
 
+      {member.youtubeUrl ? (
+        <a
+          href={member.youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Canal de YouTube de ${member.name} (se abre en una pestaña nueva)`}
+          className="tech-label mt-5 inline-flex min-h-11 items-center gap-3 self-start border-b border-blood/50 py-2 text-fog transition-colors duration-300 hover:text-blood"
+        >
+          <YouTubeIcon className="h-5 w-5 shrink-0" />
+          Ver canal de YouTube
+        </a>
+      ) : null}
+
       {hasBio ? (
         <div className="mt-8 flex flex-col gap-7 sm:mt-10">
           <BioSection title="BIO" content={bio?.shortBio} />
 
           <BioSection
-            title="TRAYECTORIA ANTERIOR"
+            title={member.id === "maxi" ? "TRAYECTORIA" : "TRAYECTORIA ANTERIOR"}
             content={bio?.trajectory}
           />
 
           <BioSection
-            title="CÓMO LLEGÓ A SYNCRO22"
+            title={member.id === "maxi" ? "ETAPA SYNCRO22" : "CÓMO LLEGÓ A SYNCRO22"}
             content={bio?.howJoined}
           />
 

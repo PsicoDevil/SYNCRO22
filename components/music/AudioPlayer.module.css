@@ -1,0 +1,42 @@
+.slider {
+  appearance: none;
+  width: 100%;
+  height: 2.75rem;
+  min-width: 0;
+  cursor: pointer;
+  background: transparent;
+  accent-color: var(--color-blood);
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 3px;
+  background: var(--color-steel);
+}
+
+.slider::-moz-range-track {
+  height: 3px;
+  background: var(--color-steel);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -5px;
+  border: 2px solid var(--color-bone);
+  border-radius: 0;
+  background: var(--color-blood);
+}
+
+.slider::-moz-range-thumb {
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-bone);
+  border-radius: 0;
+  background: var(--color-blood);
+}
+
+.slider:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

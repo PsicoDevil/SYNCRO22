@@ -9,7 +9,7 @@ import {
   SpotifyIcon,
   YouTubeIcon,
 } from "@/components/ui/icons";
-import { siteContactEmail, socialLinks } from "@/lib/site";
+import { siteContactEmail, siteNavigation, socialLinks } from "@/lib/site";
 
 // Perfil oficial de artista en Spotify. Se abre en pestaña nueva.
 const SPOTIFY_ARTIST_URL =
@@ -24,7 +24,7 @@ export default function ContactoPage() {
   return (
     <>
       <PageHeader
-        index="06"
+        index={siteNavigation.contacto.index}
         title="Contacto"
         description="Contacto para booking, prensa y gestión."
       />
@@ -62,14 +62,6 @@ export default function ContactoPage() {
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.03),transparent_50%)]"
           aria-hidden="true"
         />
-
-        {/* Índice fantasma decorativo (fuera del flujo, no suma altura en mobile) */}
-        <span
-          aria-hidden="true"
-          className="display-title pointer-events-none absolute -top-4 right-0 select-none text-[7rem] leading-none text-transparent [-webkit-text-stroke:1px_rgba(232,232,232,0.06)] sm:-top-8 sm:text-[12rem] lg:-top-14 lg:text-[16rem]"
-        >
-          06
-        </span>
 
         <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
           {/* Columna de información */}

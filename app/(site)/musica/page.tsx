@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { MusicCatalog } from "@/components/music/MusicCatalog";
+import { releases } from "@/content/releases";
+import { site } from "@/content/site";
+import { getMusicRequestTime } from "@/lib/music-release-server";
+import { getVisibleReleases, nextMusicReleaseDate } from "@/lib/music-release";
+import { ReleaseRefresh } from "@/components/music/ReleaseRefresh";
+import { siteNavigation } from "@/lib/site";
 
 // Perfil oficial de artista en Spotify. Se abre en pestaña nueva.
 const SPOTIFY_ARTIST_URL =
@@ -11,14 +18,18 @@ export const metadata: Metadata = {
   description: "Discografía de SYNCRO22.",
 };
 
-export default function MusicaPage() {
+export default async function MusicaPage() {
+  const now = await getMusicRequestTime();
+  const visibleReleases = getVisibleReleases(releases, now);
   return (
     <>
       <PageHeader
-        index="01"
+        index={siteNavigation.musica.index}
         title="Música"
         description="Discografía, singles y lanzamientos de SYNCRO22."
       />
+      <ReleaseRefresh at={nextMusicReleaseDate(releases, now)} serverNow={now} />
+      <MusicCatalog releases={visibleReleases} now={now} albumRevealAt={site.releaseDate} />
       <section
         className="relative isolate overflow-hidden bg-ink"
         aria-label="Escuchar a SYNCRO22 en Spotify"

@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
+import { siteNavigation } from "@/lib/site";
 
 interface BiographyProps {
   /** Párrafos de la biografía oficial (contenido centralizado en content/site.ts). */
@@ -41,7 +42,7 @@ export function Biography({ paragraphs }: BiographyProps) {
         {/* Columna editorial: título + metadatos */}
         <div className="flex flex-col lg:col-span-4">
           <Reveal>
-            <SectionHeading index="01" title="BIOGRAFÍA" />
+            <SectionHeading index={siteNavigation.inicio.index} title="BIOGRAFÍA" />
             <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 lg:mt-12">
               <span className="tech-label text-smoke">ROCK ALTERNATIVO</span>
               <span className="tech-label text-smoke">EST. 2022</span>

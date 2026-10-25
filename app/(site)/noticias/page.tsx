@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { VideoPressCard } from "@/components/videos/VideoPressCard";
 import { news } from "@/content/news";
+import { siteNavigation } from "@/lib/site";
 
 // Prensa audiovisual — entrevista (recurso existente). El archivo original
 // "Entrevista - ESQUIÚ ROCK.mkv" vive en /public/news (sin mover ni renombrar
@@ -24,7 +25,7 @@ export default function NoticiasPage() {
   return (
     <>
       <PageHeader
-        index="05"
+        index={siteNavigation.noticias.index}
         title="Noticias"
         description="Novedades y anuncios de SYNCRO22."
       />

@@ -8,7 +8,7 @@ import type { Show } from "./types";
  *
  * Reglas de carga:
  * - Si un dato no aparece claramente en el flyer, se deja vacío (null) — no se infiere.
- * - `date` (ISO completo) SOLO cuando el año es visible en el flyer;
+ * - `date` (ISO completo) SOLO cuando el año es visible en el flyer o confirmado por la banda;
  *   si el año falta, queda null y la fecha visible vive en `dateLabel`.
  * - `status`: "upcoming" solo para fechas futuras confirmadas. Los shows con
  *   año pendiente se cargan como "past" (archivo histórico) hasta confirmarse.
@@ -101,6 +101,31 @@ export const shows: Show[] = [
     venue: "Escenario Patio Matero",
     flyer: "/shows/poncho-2026.jpeg",
     status: "past", // Mes pendiente de confirmación (no figura en el flyer).
+  },
+  {
+    // Flyer: SAB 31 OCT, 23 HS. Año 2026 confirmado expresamente por la banda.
+    id: "halloween-disruptivo",
+    date: "2026-10-31",
+    dateLabel: "Sábado 31 de octubre de 2026",
+    time: "23:00 hs",
+    title: "Halloween Disruptivo",
+    venue: "Parador Sur",
+    address: "1 de Mayo y La Rioja, frente a la Plaza de la Estación",
+    flyer: "/shows/Halloween-Disruptivo.jpeg",
+    notes: "Fiesta de disfraces · Premio al mejor disfraz · Entradas: $5000 · En vivo: Inadaptadas (tributo a Misfits x Disruptiva) y SYNCRO22",
+    status: "upcoming",
+  },
+  {
+    // Flyer: HALLOFALL 26 — 7 NOV — 20 HS — BACCO CLUB.
+    id: "hallofall-2026",
+    date: "2026-11-07",
+    dateLabel: "7 de noviembre de 2026",
+    time: "20:00 hs",
+    title: "HALLOFALL",
+    venue: "Bacco Club",
+    flyer: "/shows/HALLOFALL.jpeg",
+    notes: "Halloween Fest · Venta oficial de entradas: www.norticket.com.ar",
+    status: "upcoming",
   },
   {
     // Flyer: "Rockeada Solidaria — ISAC Palooza — 22 de noviembre Día de la Música — 17HS — Alem entre San Martín y República" (sin año).

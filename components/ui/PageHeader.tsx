@@ -11,7 +11,7 @@ export function PageHeader({ index, title, description, className }: PageHeaderP
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b border-steel bg-ink pt-40 pb-16 sm:pt-48 sm:pb-20",
+        "relative overflow-hidden border-b border-steel bg-ink pt-24 pb-16 sm:pt-48 sm:pb-20",
         className
       )}
     >

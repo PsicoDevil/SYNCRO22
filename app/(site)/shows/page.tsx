@@ -9,7 +9,7 @@ import { UpcomingShowCard } from "@/components/shows/UpcomingShowCard";
 import { PastShowCard } from "@/components/shows/PastShowCard";
 import { historialFirstIds, shows } from "@/content/shows";
 import type { Show } from "@/content/types";
-import { socialLinks } from "@/lib/site";
+import { siteNavigation, socialLinks } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Shows",
@@ -25,19 +25,20 @@ export default function ShowsPage() {
 
   // Historial: los primeros shows según `historialFirstIds` (orden visual);
   // el resto, cronológicamente de más reciente a más antiguo.
+  const pastShows = shows.filter((show) => show.status === "past");
   const firstIds = new Set<string>(historialFirstIds);
-  const byId = new Map(shows.map((show) => [show.id, show] as const));
+  const byId = new Map(pastShows.map((show) => [show.id, show] as const));
   const historialShows = [
     ...historialFirstIds
       .map((id) => byId.get(id))
       .filter((show): show is Show => show !== undefined),
-    ...shows.filter((show) => !firstIds.has(show.id)).reverse(),
+    ...pastShows.filter((show) => !firstIds.has(show.id)).reverse(),
   ];
 
   return (
     <>
       <PageHeader
-        index="03"
+        index={siteNavigation.shows.index}
         title="Próximas fechas"
         description="Fechas confirmadas. Toda nueva fecha se anuncia primero en nuestras redes."
       />
@@ -47,10 +48,10 @@ export default function ShowsPage() {
         className="relative overflow-hidden border-b border-steel/60"
         aria-label="Próximas fechas"
       >
-        {/* Foto ambiental — chelo22: directos de la banda, velados tras el listado */}
+        {/* Foto ambiental — elivideo: directos de la banda, velados tras el listado */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
-            src="/show/chelo22.png"
+            src="/videos/elivideo.png"
             alt=""
             fill
             sizes="100vw"
@@ -107,7 +108,7 @@ export default function ShowsPage() {
         />
         <div className="relative mx-auto w-full max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
           <SectionHeading
-            index="3.1"
+            index={`${siteNavigation.shows.index}.1`}
             title="Historial de shows"
             description="Flyers oficiales de las presentaciones de SYNCRO22."
           />
