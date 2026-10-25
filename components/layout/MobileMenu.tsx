@@ -1,27 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { CloseIcon, FacebookIcon, InstagramIcon, MenuIcon, YouTubeIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
-import { socialLinks } from "@/lib/site";
+import { navigationItems as navItems, socialLinks } from "@/lib/site";
 
-const navItems = [
-  { href: "/", label: "Inicio" },
-  { href: "/musica", label: "Música" },
-  { href: "/videos", label: "Videos" },
-  { href: "/shows", label: "Shows" },
-  { href: "/galeria", label: "Galería" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/contacto", label: "Contacto" },
-];
+// El portal se monta tras hidratar, conservando el mismo HTML inicial del servidor.
+const subscribeToHydration = () => () => {};
+const getHydratedSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 export function MobileMenu() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const isHydrated = useSyncExternalStore(subscribeToHydration, getHydratedSnapshot, getServerSnapshot);
 
   // Cierra el menú cuando cambia la ruta (patrón de ajuste de estado durante el render)
   if (prevPathname !== pathname) {
@@ -30,19 +30,62 @@ export function MobileMenu() {
   }
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (!isOpen) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousRootOverflow = document.documentElement.style.overflow;
+    const trigger = triggerRef.current;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    closeRef.current?.focus({ preventScroll: true });
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (!panelRef.current?.contains(active)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
+
+    document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousRootOverflow;
+      if (trigger?.isConnected) trigger.focus({ preventScroll: true });
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setIsOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(true)}
         className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood lg:hidden"
@@ -53,15 +96,21 @@ export function MobileMenu() {
         <MenuIcon className="h-6 w-6" />
       </button>
 
-      <div
+      {/* Fuera del header: su backdrop-filter al hacer scroll contiene a los fixed descendientes. */}
+      {isHydrated ? createPortal(<div
+        ref={panelRef}
         id="mobile-menu"
+        role="dialog"
+        aria-label="Menú de navegación"
+        aria-modal={isOpen ? true : undefined}
         className={cn(
-          "fixed inset-0 z-[100] flex flex-col bg-black transition-all duration-500 ease-out lg:hidden",
+          "fixed inset-0 z-[100] flex h-dvh flex-col overflow-hidden bg-black transition-all duration-500 ease-out lg:hidden",
           isOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         )}
         aria-hidden={!isOpen}
+        inert={!isOpen}
       >
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-steel px-4 sm:h-20 sm:px-6">
           <Image
@@ -72,6 +121,7 @@ export function MobileMenu() {
             className="h-8 w-auto sm:h-10"
           />
           <button
+            ref={closeRef}
             type="button"
             onClick={() => setIsOpen(false)}
             className="inline-flex h-11 w-11 items-center justify-center text-bone transition-colors hover:text-blood"
@@ -82,20 +132,22 @@ export function MobileMenu() {
         </div>
 
         <nav
-          className="flex flex-1 flex-col justify-start gap-1 overflow-y-auto px-4 pt-4 sm:justify-center sm:gap-2 sm:px-6 sm:pt-0"
+          className="flex min-h-0 flex-1 flex-col justify-start gap-1 overflow-y-auto overscroll-contain px-4 pt-4 sm:justify-center-safe sm:gap-2 sm:px-6 sm:pt-0"
           aria-label="Menú principal"
         >
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setIsOpen(false)}
+              aria-current={pathname === item.href ? "page" : undefined}
               className={cn(
                 "group flex items-baseline gap-4 py-2.5 transition-all duration-300 sm:py-3",
                 pathname === item.href ? "text-blood" : "text-bone hover:text-blood"
               )}
             >
               <span className="tech-label text-smoke">
-                {String(index + 1).padStart(2, "0")}
+                {item.index}
               </span>
               <span className="display-title text-3xl uppercase sm:text-4xl">{item.label}</span>
             </Link>
@@ -140,7 +192,7 @@ export function MobileMenu() {
             ) : null}
           </div>
         </div>
-      </div>
+      </div>, document.body) : null}
     </>
   );
 }

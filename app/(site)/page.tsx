@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Marquee } from "@/components/ui/Marquee";
 import { ReleaseCountdown } from "@/components/home/ReleaseCountdown";
 import { Biography } from "@/components/home/Biography";
+import { SingleLaunchLink } from "@/components/home/SingleLaunchLink";
 import { site } from "@/content/site";
 
 export default function HomePage() {
@@ -45,12 +46,13 @@ export default function HomePage() {
               SHOWS
             </Button>
           </div>
+          <SingleLaunchLink />
         </div>
       </section>
 
       <Marquee
         items={[
-          "DE MÍ NUNCA VAS A ESCAPAR, ME ALIMENTO DE SANGRE Y OSCURIDAD...",
+          "DE MI VOS NUNCA VAS A ESCAPAR, ME ALIMENTO DE SANGRE Y OSCURIDAD...",
         ]}
       />
 

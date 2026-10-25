@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { VideosShowcase } from "@/components/videos/VideosShowcase";
 import { videos } from "@/content/videos";
+import { siteNavigation } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Videos",
@@ -13,16 +14,16 @@ export default function VideosPage() {
   return (
     <>
       <PageHeader
-        index="02"
+        index={siteNavigation.videos.index}
         title="Videos"
         description="Videos oficiales, lyric videos y presentaciones en vivo de SYNCRO22."
       />
 
       <section className="relative isolate overflow-hidden bg-ink">
-        {/* Ambientación — elivideo: luz fría y fuego en escena (fondo, no protagonista) */}
+        {/* Ambientación — chelo22: fondo de escena, no protagonista */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
-            src="/videos/elivideo.png"
+            src="/show/chelo22.png"
             alt=""
             fill
             sizes="100vw"

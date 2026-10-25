@@ -6,16 +6,7 @@ import {
   SpotifyIcon,
   YouTubeIcon,
 } from "@/components/ui/icons";
-import { socialLinks } from "@/lib/site";
-
-const navItems = [
-  { href: "/musica", label: "Música" },
-  { href: "/videos", label: "Videos" },
-  { href: "/shows", label: "Shows" },
-  { href: "/galeria", label: "Galería" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/contacto", label: "Contacto" },
-];
+import { internalNavigationItems as navItems, socialLinks } from "@/lib/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -95,7 +86,15 @@ export function Footer() {
           <p className="tech-label text-smoke">
             © {year} SYNCRO22. TODOS LOS DERECHOS RESERVADOS.
           </p>
-          <p className="tech-label text-[0.625rem] text-smoke/70">DEV BY MR.</p>
+          <a
+            href="https://mrportfolio-seven.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Portfolio de MR (se abre en una pestaña nueva)"
+            className="tech-label text-[0.625rem] text-smoke/70 transition-colors duration-300 hover:text-fog"
+          >
+            DEV BY MR.
+          </a>
         </div>
       </div>
     </footer>

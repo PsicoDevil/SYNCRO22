@@ -8,14 +8,34 @@
 
 export type ReleaseType = "album" | "ep" | "single";
 
-export interface Track {
+export interface LyricBlock {
+  /** Verso cantado, indicación de estructura o anotación de ensayo. */
+  type: "verse" | "cue" | "note";
+  text: string;
+}
+
+export interface SongLyrics {
+  /** Título original: conserva explícitamente la correspondencia con la fuente. */
+  sourceTitle: string;
+  sourceDocument: string;
+  sourcePage: number;
+  blocks: LyricBlock[];
+}
+
+/** Una canción se carga una sola vez y puede integrar varios lanzamientos. */
+export interface Song {
   id: string;
-  trackNumber: number;
   title: string;
   duration?: string;
   audioUrl?: string;
   youtubeUrl?: string;
   spotifyUrl?: string;
+  /** Ausente cuando la letra está pendiente de carga. */
+  lyrics?: SongLyrics;
+}
+
+export interface Track extends Song {
+  trackNumber: number;
 }
 
 export interface StreamingLinks {
@@ -29,9 +49,18 @@ export interface StreamingLinks {
 export interface Release {
   id: string;
   title: string;
+  artist?: string;
   slug: string;
   type: ReleaseType;
   releaseDate?: string;
+  /** Fecha visible opcional; no cambia las reglas de disponibilidad del audio. */
+  displayReleaseDate?: string;
+  /** Embargo del álbum: no enviar su ficha al navegador antes de esta fecha. */
+  revealAt?: string;
+  featured?: boolean;
+  webExclusive?: boolean;
+  /** Preescucha del single al ejecutar next dev; no adelanta su estreno público. */
+  audioPreview?: boolean;
   year?: number;
   cover?: string;
   description?: string;
@@ -112,12 +141,30 @@ export interface SocialLinks {
   tiktok?: string;
 }
 
+/**
+ * Información biográfica de un integrante.
+ *
+ * Todos los campos son opcionales porque no necesariamente
+ * todos los integrantes tienen su ficha completa todavía.
+ */
+export interface MemberBio {
+  shortBio?: string;
+  trajectory?: string;
+  howJoined?: string;
+  influences?: string;
+  personalNote?: string;
+}
+
+/**
+ * Integrante de SYNCRO22.
+ */
 export interface Member {
   id: string;
   name: string;
   role?: string;
   photo?: string;
-  bio?: string;
+  youtubeUrl?: string;
+  bio?: MemberBio;
 }
 
 export interface Site {

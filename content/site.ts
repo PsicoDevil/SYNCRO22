@@ -17,8 +17,8 @@ export const site: Site = {
    * TEMPORAL: reemplazar por el email oficial de SYNCRO22 cuando exista.
    */
   contactEmail: "syncrooo22@gmail.com",
-  /** Lanzamiento del disco — 31 de octubre de 2026, zona horaria de Argentina. */
-  releaseDate: "2026-10-31T00:00:00-03:00",
+  /** Lanzamiento del disco — 31 de octubre de 2026, 06:06:06, zona horaria de Argentina. */
+  releaseDate: "2026-10-31T06:06:06-03:00",
   /**
    * Biografía oficial — texto provisto por la banda.
    * NO editar ni reescribir sin autorización.
