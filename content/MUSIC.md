@@ -75,14 +75,14 @@ Las nueve canciones del disco tienen letra en el documento. El disco se llama
   `npm run dev`, sin mensaje de espera. No requiere cambiar el reloj ni las fechas.
   Esta preescucha solo se aplica en desarrollo (`NODE_ENV=development`);
   `npm run build` y `npm run start` conservan la fecha pública del single.
-- **9 Peldaños**: página `/musica/9-peldanos`. La fecha se toma exclusivamente
-  de `site.releaseDate`, actualmente `2026-10-31T06:06:06-03:00` (horario unificado
-  con el countdown por confirmación de la banda).
-  El original está en `private/album/9-peldanos-cover.png`, fuera de `public`.
-  La URL `/album/9-peldanos-cover.png` se conserva como endpoint protegido.
+- **9 Peldaños**: página `/musica/9-peldanos`, publicada sin espera temporal por
+  autorización de la banda. `releaseDate` conserva la fecha informativa;
+  el álbum ya no tiene `revealAt` ni una pantalla de countdown.
+  La portada web está en `public/album/9-peldanos-cover.jpeg` y los nueve MP3
+  en `public/album/audio/`. Los originales privados se conservan intactos.
 - **Nochecita en el Jumeal**: conserva su portada y su MP3 existentes.
 
-`revealAt` indica el embargo completo de un álbum; no cambiarlo por la fecha de
+`revealAt` controla la revelación de la ficha y las letras del álbum; no cambiarlo por la fecha de
 un single. `getVisibleReleases` excluye los álbumes embargados y quita las URLs
 de escucha de los singles cuyo estreno no llegó, salvo la preescucha explícita
 de desarrollo de POSESIÓN. Las páginas usan `connection()`
@@ -91,16 +91,14 @@ el build ni enviar la ficha oculta al cliente. No añadir fechas de prueba ni
 parámetros que permitan saltar el embargo en producción.
 
 `ReleaseRefresh` vuelve a consultar al servidor al vencer la próxima fecha y al
-regresar a una pestaña abierta. El countdown existente se reutiliza únicamente
-para el álbum; no controla el single. Los enlaces de letras se calculan solo
+regresar a una pestaña abierta para otros lanzamientos pendientes. 9 Peldaños
+ya no depende del countdown. Los enlaces de letras se calculan solo
 entre lanzamientos visibles para evitar apuntar a una ficha todavía oculta.
 
-La portada del álbum se entrega desde un Route Handler de Node solo cuando llega
-`site.releaseDate`; antes responde 404 sin bytes de imagen ni caché. `proxy.ts`
-bloquea también las solicitudes de `/_next/image` dirigidas a esa portada, incluso
-si una variante optimizada ya estaba guardada en caché antes del cambio.
-No mover el original de nuevo a `public` ni importarlo como imagen estática: eso
-volvería a crear un recurso público ajeno al control de fecha. El archivo privado
-se incluye mediante el file tracing del handler para su disponibilidad en el servidor.
+Los recursos web del álbum se sirven como archivos estáticos desde `/album/`.
+La portada y los MP3 son accesibles por URL directa desde el despliegue,
+independientemente del countdown. Ya no utilizan rutas de Node ni un proxy de
+protección. La página del álbum muestra el reproductor, las nueve letras y los
+créditos desde el primer render, tanto en desarrollo como en producción.
 No hay enlaces de plataformas confirmados para el álbum; se cargarán en
 `streamingLinks` cuando estén disponibles.

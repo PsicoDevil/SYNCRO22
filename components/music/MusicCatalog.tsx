@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import type { Release, StreamingLinks } from "@/content/types";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -23,9 +24,10 @@ interface ReleaseEntryProps {
   lyricContexts: Map<string, string>;
   now: number;
   showAlbumLink?: boolean;
+  tracklist?: ReactNode;
 }
 
-export function ReleaseEntry({ release, lyricContexts, now, showAlbumLink = true }: ReleaseEntryProps) {
+export function ReleaseEntry({ release, lyricContexts, now, showAlbumLink = true, tracklist }: ReleaseEntryProps) {
   const isSingle = release.type === "single";
   const displayReleaseDate = release.displayReleaseDate ?? release.releaseDate;
   const isPending = isSingle && !isReleaseAvailable(release.releaseDate, now);
@@ -72,7 +74,7 @@ export function ReleaseEntry({ release, lyricContexts, now, showAlbumLink = true
           </div>
         </div>
       </div>
-      {singleTrack && sharedLyricsTarget ? null : release.tracks.length > 0 ? (
+      {tracklist ?? (singleTrack && sharedLyricsTarget ? null : release.tracks.length > 0 ? (
         <ol className={isSingle ? "mt-8 min-w-0 border-t border-steel" : "min-w-0 border-t border-steel"} aria-label={`Canciones de ${release.title}`}>
           {[...release.tracks].sort((a, b) => a.trackNumber - b.trackNumber).map((track) => (
             <li key={track.id} className="min-w-0">
@@ -80,7 +82,7 @@ export function ReleaseEntry({ release, lyricContexts, now, showAlbumLink = true
             </li>
           ))}
         </ol>
-      ) : <EmptyState title="Canciones pendientes de carga" />}
+      ) : <EmptyState title="Canciones pendientes de carga" />)}
     </article>
   );
 }
@@ -88,21 +90,22 @@ export function ReleaseEntry({ release, lyricContexts, now, showAlbumLink = true
 interface MusicCatalogProps {
   releases: Release[];
   now: number;
-  albumRevealAt?: string;
 }
 
-export function MusicCatalog({ releases, now, albumRevealAt }: MusicCatalogProps) {
+export function MusicCatalog({ releases, now }: MusicCatalogProps) {
+  // 9 Peldaños tiene su tarjeta y página propias; sus singles conservan aquí sus letras.
+  const catalogReleases = releases.filter((release) => release.slug !== "9-peldanos");
   // Los singles reutilizan la letra del disco cuando la canción ya figura allí.
   const lyricContexts = new Map<string, string>();
-  const lyricReleases = [...releases.filter((release) => release.type !== "single"), ...releases.filter((release) => release.type === "single")];
+  const lyricReleases = [...catalogReleases.filter((release) => release.type !== "single"), ...catalogReleases.filter((release) => release.type === "single")];
   for (const release of lyricReleases) {
     for (const track of release.tracks) {
       if (!lyricContexts.has(track.id)) lyricContexts.set(track.id, release.id);
     }
   }
   const categories = [
-    { id: "discos", title: "Discos", index: `${siteNavigation.musica.index}.A`, entries: releases.filter((release) => release.type !== "single") },
-    { id: "singles", title: "Singles", index: `${siteNavigation.musica.index}.B`, entries: releases.filter((release) => release.type === "single" && !release.featured) },
+    { id: "discos", title: "Discos", index: `${siteNavigation.musica.index}.A`, entries: catalogReleases.filter((release) => release.type !== "single") },
+    { id: "singles", title: "Singles", index: `${siteNavigation.musica.index}.B`, entries: catalogReleases.filter((release) => release.type === "single" && !release.featured) },
   ];
   const featured = releases.filter((release) => release.featured);
 
@@ -125,11 +128,12 @@ export function MusicCatalog({ releases, now, albumRevealAt }: MusicCatalogProps
           {categories.map((category) => (
             <section key={category.id} id={category.id} aria-label={category.title} className="min-w-0 scroll-mt-28">
               <SectionHeading index={category.index} title={category.title} className="mb-10" />
+              {category.id === "discos" ? <AlbumTeaser /> : null}
               {category.entries.length > 0 ? (
-                <div className="flex min-w-0 flex-col gap-16">
+                <div className={`flex min-w-0 flex-col gap-16${category.id === "discos" ? " mt-16" : ""}`}>
                   {category.entries.map((release) => <ReleaseEntry key={release.id} release={release} lyricContexts={lyricContexts} now={now} />)}
                 </div>
-              ) : category.id === "discos" && albumRevealAt ? <AlbumTeaser releaseDate={albumRevealAt} /> : category.id === "singles" && featured.some((release) => release.type === "single") ? <p className="text-sm text-fog">El single destacado se encuentra al inicio del catálogo.</p> : <EmptyState title={`Sin ${category.title.toLowerCase()} registrados`} description="Los próximos lanzamientos aparecerán aquí." />}
+              ) : category.id === "discos" ? null : category.id === "singles" && featured.some((release) => release.type === "single") ? <p className="text-sm text-fog">El single destacado se encuentra al inicio del catálogo.</p> : <EmptyState title={`Sin ${category.title.toLowerCase()} registrados`} description="Los próximos lanzamientos aparecerán aquí." />}
             </section>
           ))}
         </div>

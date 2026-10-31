@@ -1,17 +1,19 @@
-import Link from "next/link";
-import { ReleaseCountdown } from "@/components/home/ReleaseCountdown";
+import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import { debutAlbum } from "@/content/releases";
 
-export function AlbumTeaser({ releaseDate }: { releaseDate: string }) {
+export function AlbumTeaser() {
   return (
-    <div className="flex flex-col items-start gap-8 border border-steel bg-ink/60 p-6 sm:p-10">
-      <div>
-        <p className="tech-label text-blood">Próximo álbum</p>
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-fog">Un nuevo capítulo está por llegar. El álbum se revelará cuando termine el countdown.</p>
+    <article className="flex min-w-0 flex-col gap-8 border border-steel bg-ink/60 p-6 sm:flex-row sm:items-center sm:p-10">
+      {debutAlbum.cover ? <Image src={debutAlbum.cover} alt={`Portada de ${debutAlbum.title}`} width={256} height={256} sizes="(min-width: 640px) 224px, 256px" className="aspect-square w-full max-w-64 shrink-0 self-center border border-steel object-cover sm:w-56" /> : null}
+      <div className="min-w-0">
+        <p className="tech-label text-blood">ÁLBUM DISPONIBLE</p>
+        <h3 className="display-title mt-4 break-words text-4xl text-bone sm:text-6xl">{debutAlbum.title}</h3>
+        <p className="mt-4 font-mono text-xs leading-relaxed tracking-[0.12em] text-fog">{debutAlbum.artist} · ÁLBUM COMPLETO</p>
+        <div className="mt-6">
+          <Button href={`/musica/${debutAlbum.slug}`}>ESCUCHAR EL DISCO</Button>
+        </div>
       </div>
-      <ReleaseCountdown releaseDate={releaseDate} />
-      <Link href="/musica/9-peldanos" className="tech-label inline-flex min-h-11 items-center border-b border-blood py-3 text-bone transition-colors hover:text-blood">
-        Ver próximo álbum →
-      </Link>
-    </div>
+    </article>
   );
 }

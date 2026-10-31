@@ -16,7 +16,6 @@ export const releases: Release[] = [
     artist: "SYNCRO22",
     type: "album",
     releaseDate: site.releaseDate,
-    revealAt: site.releaseDate,
     cover: albumCoverUrl,
     tracks: [
       songs.salamanca,

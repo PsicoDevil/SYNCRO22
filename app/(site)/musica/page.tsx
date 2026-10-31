@@ -3,7 +3,6 @@ import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { MusicCatalog } from "@/components/music/MusicCatalog";
 import { releases } from "@/content/releases";
-import { site } from "@/content/site";
 import { getMusicRequestTime } from "@/lib/music-release-server";
 import { getVisibleReleases, nextMusicReleaseDate } from "@/lib/music-release";
 import { ReleaseRefresh } from "@/components/music/ReleaseRefresh";
@@ -29,7 +28,7 @@ export default async function MusicaPage() {
         description="Discografía, singles y lanzamientos de SYNCRO22."
       />
       <ReleaseRefresh at={nextMusicReleaseDate(releases, now)} serverNow={now} />
-      <MusicCatalog releases={visibleReleases} now={now} albumRevealAt={site.releaseDate} />
+      <MusicCatalog releases={visibleReleases} now={now} />
       <section
         className="relative isolate overflow-hidden bg-ink"
         aria-label="Escuchar a SYNCRO22 en Spotify"
