@@ -30,17 +30,17 @@ export default async function AlbumPage() {
                 muted
                 playsInline
                 preload="none"
-                poster={debutAlbum.cover}
+                poster="/album/9-peldanos-fondo-poster.jpg"
                 disablePictureInPicture
                 disableRemotePlayback
                 tabIndex={-1}
                 className="h-full w-full object-cover"
               >
-                <source src="/album/9-peldanos-fondo-compatible.mp4" type="video/mp4" media="(min-width: 768px) and (prefers-reduced-motion: no-preference)" />
+                <source src="/album/9-peldanos-fondo-compatible.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)" />
               </video>
-              <div className="absolute right-0 bottom-0 h-16 w-32 bg-[radial-gradient(ellipse_at_50%_100%,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.94)_30%,rgba(0,0,0,0.6)_50%,transparent_75%)] sm:h-24 sm:w-48 lg:h-28 lg:w-64" />
+              <div className="absolute right-0 bottom-0 h-32 w-64 bg-[radial-gradient(ellipse_100%_100%_at_100%_100%,#000_0%,#000_45%,rgba(0,0,0,0.98)_60%,rgba(0,0,0,0.65)_78%,transparent_100%)] sm:h-48 sm:w-96 md:h-24 md:w-48 md:bg-[radial-gradient(ellipse_at_50%_100%,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.94)_30%,rgba(0,0,0,0.6)_50%,transparent_75%)] lg:h-28 lg:w-64" />
             </div>
-            <div className="absolute inset-0 bg-black/80" />
+            <div className="absolute inset-0 bg-black/70 md:bg-black/80" />
           </div>
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <ReleaseEntry
